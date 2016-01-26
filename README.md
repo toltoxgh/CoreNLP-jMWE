@@ -1,7 +1,6 @@
 ## Table of Contents
 **[CoreNLP-jMWE](#corenlp-jmwe)**  
-**[Usage](#usage)**
-**[Installation and use](#installation)**  
+**[Installation and use](#installation-and-use)**  
 **[Demo](#demo)**  
 **[Annotator properties](#annotator-properties)**  
 **[MWE detectors](#mwe-detectors)**  
