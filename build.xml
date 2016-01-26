@@ -1,0 +1,71 @@
+<project name="stanford-corenlp-jmwe-annotator" basedir="." default="main">
+
+    <property name="src.dir"     value="src"/>
+    <property name="test.dir"   value="test"/>
+    <property name="log.dir"   value="log"/>
+
+    <property name="build.dir"   value="bin"/>
+    <property name="classes.dir" value="${build.dir}"/>
+    <property name="jar.dir"     value="."/>
+    <property name="build.test.dir"   value="${build.dir}/test"/>
+    <property name="test.report.dir" location="testreport" /> 
+    
+
+    <property name="lib.dir"     value="lib"/>
+    <path id="classpath">
+        <pathelement location="junit-4.12.jar" /> 
+        <pathelement location="hamcrest-core-1.3.jar" />
+        <fileset dir="${lib.dir}" includes="**/*.jar"/>
+        <pathelement location="${build.dir}" />
+    </path>
+
+
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+        <delete dir="${test.report.dir}" />
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${build.test.dir}" /> 
+        <mkdir dir="${test.report.dir}" /> 
+        <javac debug="true" includeantruntime="false" srcdir="${src.dir}" destdir="${classes.dir}" classpathref="classpath"/>
+        <javac debug="true" includeantruntime="false" srcdir="${test.dir}" destdir="${build.test.dir}" classpathref="classpath"/>
+    </target>
+
+    <target name="jar" depends="compile">
+        <mkdir dir="${jar.dir}"/>
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}" excludes="test/" >
+        </jar>
+        <jar destfile="${jar.dir}/${ant.project.name}-sources.jar" basedir="${src.dir}">
+        </jar>
+        <jar destfile="${jar.dir}/${ant.project.name}-tests.jar" basedir="${classes.dir}/test">
+        </jar>                    
+        <jar destfile="${jar.dir}/${ant.project.name}-tests-sources.jar" basedir="${test.dir}">
+        </jar>        
+    </target>
+    
+    <target name="clean-build" depends="clean,jar"/>
+
+    <target name="main" depends="clean,jar,junit"/>  
+    
+    <target name="junit" depends="compile"> 
+        <property name="log.dir"   value="log"/>
+        <junit printsummary="on" fork="true" showoutput="true" haltonfailure="yes"> 
+            <classpath refid="classpath" /> 
+            <classpath> 
+                 <pathelement location="${build.test.dir}"/> 
+            </classpath> 
+            
+             <formatter type="xml" /> 
+             <formatter type="plain"/>
+             
+             <batchtest todir="${test.report.dir}"> 
+                 <fileset dir="${test.dir}"> 
+                       <include name="**/*Test*.java" /> 
+                 </fileset> 
+             </batchtest> 
+         </junit> 
+     </target>    
+
+</project>
