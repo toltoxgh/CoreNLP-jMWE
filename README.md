@@ -86,15 +86,12 @@ From [JUnit](http://junit.org/), download:
 The compilation preparation is done!
 
 ### Compiling, jar packaging and unit tests
-1. To compile the project, go inside the CoreNLP-jMWE folder and run
 
-        ant 
-
-2. To run the demo, first create the jar files with:
+1. To compile the project and create jar files, go inside the CoreNLP-jMWE folder and run
 
         ant jar
     
-3. To run the unit tests, you need to edit the ``JMWEAnnotatorTest.java`` and point the ``public static final String index`` variable to the location on your file system where the ``mweindex_wordnet3.0_semcor1.6.data`` file is stored. Then, run: 
+2. To run the unit tests, you need to edit the ``JMWEAnnotatorTest.java`` and point the ``public static final String index`` variable to the location on your file system where the ``mweindex_wordnet3.0_semcor1.6.data`` file is stored. Then, run: 
 
         ant clean && ant junit
         
