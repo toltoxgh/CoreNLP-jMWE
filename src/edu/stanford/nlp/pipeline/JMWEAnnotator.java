@@ -58,9 +58,9 @@ public class JMWEAnnotator implements Annotator {
     // the index data for jMWE, loaded from for instance the file
     // mweindex_wordnet3.0_Semcor1.6.data
     private final IMWEIndex index;
-    // the String that will replace an underscore in the signal, necessary since
-    // jMWE throws an Exception if an underscore is part of the signal
-    private final String underscoreReplacement;
+    // the String that will replace each underscore and each space in the signal, necessary since
+    // jMWE throws an Exception if an underscore is part of the signal or a space is part of a detected token
+    private final String underscoreSpaceReplacement;
 
     /**
      * Annotator to capture Multi-Word Expressions (MWE).
@@ -72,12 +72,12 @@ public class JMWEAnnotator implements Annotator {
     public JMWEAnnotator(String name, Properties props) {
         // set verbosity
         this.verbose = PropertiesUtils.getBool(props, "customAnnotatorClass.jmwe.verbose", false);
-        // set underscoreReplacement
+        // set underscoreSpaceReplacement
         if (!PropertiesUtils.hasProperty(props, "customAnnotatorClass.jmwe.underscoreReplacement")) {
             throw new RuntimeException("No customAnnotatorClass.jmwe.underscoreReplacement key in properties found");
         }
-        underscoreReplacement = (String) props.get("customAnnotatorClass.jmwe.underscoreReplacement");
-        if (underscoreReplacement.contains("_")) {
+        underscoreSpaceReplacement = (String) props.get("customAnnotatorClass.jmwe.underscoreReplacement");
+        if (underscoreSpaceReplacement.contains("_")) {
             throw new RuntimeException("The underscoreReplacement contains an underscore character");
         }
         // set index
@@ -98,7 +98,7 @@ public class JMWEAnnotator implements Annotator {
 
         if (this.verbose) {
             System.out.println("verbose: " + this.verbose);
-            System.out.println("underscoreReplacement: " + this.underscoreReplacement);
+            System.out.println("underscoreReplacement: " + this.underscoreSpaceReplacement);
             System.out.println("indexData: " + this.index);
             System.out.println("detectorName: " + this.detectorName);
         }
@@ -209,7 +209,7 @@ public class JMWEAnnotator implements Annotator {
      * @return list of IToken
      */
     public List<IToken> getITokens(List<CoreLabel> tokens) {
-        return getITokens(tokens, underscoreReplacement);
+        return getITokens(tokens, underscoreSpaceReplacement);
     }
     
     /**
@@ -221,14 +221,14 @@ public class JMWEAnnotator implements Annotator {
      * 
      * @param tokens
      *            list of CoreLabel tokens
-     * @param underscoreReplacement the replacement String for each underscore character
+     * @param underscoreSpaceReplacement the replacement String for each underscore character and each space character
      *                              in the signal
      * @return list of IToken
      */
-    public List<IToken> getITokens(List<CoreLabel> tokens, String underscoreReplacement) {
+    public List<IToken> getITokens(List<CoreLabel> tokens, String underscoreSpaceReplacement) {
         List<IToken> sentence = new ArrayList<IToken>();
         for (CoreLabel token : tokens) {
-            sentence.add(new Token(token.originalText().replaceAll("_", underscoreReplacement), token.get(PartOfSpeechAnnotation.class), token.lemma().replaceAll("_", underscoreReplacement)));
+            sentence.add(new Token(token.originalText().replaceAll("_", underscoreSpaceReplacement).replaceAll(" ", underscoreSpaceReplacement), token.get(PartOfSpeechAnnotation.class), token.lemma().replaceAll("_", underscoreSpaceReplacement).replaceAll(" ", underscoreSpaceReplacement)));
         }
         return sentence;
     }
