@@ -216,7 +216,7 @@ The choice of the right MWE detector will greatly impact the retrieved MWEs, on 
 
 ## License
 
-This annotator has the same license as Stanford CoreNLP, which states on https://github.com/stanfordnlp/CoreNLP :
+This annotator has the same license as Stanford CoreNLP, which, at the time of writing, states on https://github.com/stanfordnlp/CoreNLP :
 "The Stanford CoreNLP code is written in Java and licensed under the GNU General Public License (v3 or later)."
 
 The jMWE files (not included here, available from http://projects.csail.mit.edu/jmwe/ ) have the following note on their page:
