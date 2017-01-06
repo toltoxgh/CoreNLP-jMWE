@@ -19,7 +19,7 @@ import edu.stanford.nlp.util.CoreMap;
 public class AbstractJMWEAnnotatorTst {
     
     // For the unit tests to pass, change this path to wherever the index file mweindex_wordnet3.0_semcor1.6.data is located
-    public static final String index = "/home/toliwa/workspace/JMWE_Annotator/lib/mweindex_wordnet3.0_semcor1.6.data";
+    public static final String index = "lib/mweindex_wordnet3.0_semcor1.6.data";
     
     /**
      * Create the observed MWEs in the text
