@@ -95,8 +95,7 @@ The compilation preparation is done!
 
         ant clean && ant junit
         
-Running the unit tests should result in **all** test passing. If this is not the case, resolve these problems before continuing. Common reasons why tests fail would be missing dependencies or not editing the ``AbstractJMWEAnnotatorTst.java`` file to point to the ``mweindex_wordnet3.0_semcor1.6.data`` file on your file-system.
-    
+Running the unit tests should result in **all** tests passing. If this is not the case, resolve these problems before continuing. Common reasons why tests fail would be missing dependencies or not editing the ``AbstractJMWEAnnotatorTst.java`` file to point to the ``mweindex_wordnet3.0_semcor1.6.data`` file on your file-system.    
     
 ## Demo
 
@@ -144,6 +143,9 @@ The following method from ``JMWEAnnotatorDemo`` shows how to programmatically ac
         }        
     }
 ```
+    
+### Remarks on the programmatical use
+It appears that when declaring and instantiating a pipeline with a ``customAnnotatorClass.jmwe`` more than one time in the code, the Annotator and its parameters will only be instantiated the first time the ``StanfordCoreNLP pipeline`` object is created. Therefore, subsequent object creations of new pipelines in the same JVM, potentially with different ``customAnnotatorClass.jmwe`` parameters, should not be performed.
 
 ## Annotator properties
 
