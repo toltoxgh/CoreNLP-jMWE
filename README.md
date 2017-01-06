@@ -29,7 +29,7 @@ Detecting MWEs can be useful in a number of applications, such as:
 1. Extracting a subset of n-grams (collocations) from a corpus for topic modeling and information retrieval purposes.
 2. Word Sense Disambiguation problems, see the publications on [jMWE](http://projects.csail.mit.edu/jmwe/) for more information.
 
-This is a ready to use new [annotator](http://nlp.stanford.edu/software/corenlp.shtml#newannotators) for Stanford CoreNLP, and can therefore be easily integrated into any further downstream NLP processing the same way as any other already existing CoreNLP annotator.
+This is a ready to use new [annotator](http://stanfordnlp.github.io/CoreNLP/new_annotator.html) for Stanford CoreNLP 3.7.0, and can therefore be easily integrated into any further downstream NLP processing the same way as any other already existing CoreNLP annotator.
 
 ## Installation and use
 
@@ -56,14 +56,14 @@ Done!
 
 ### Getting Stanford CoreNLP
 
-Either get the stable release (it comes with the model jar):
+CoreNLP-jMWE is compatible with CoreNLP 3.7.0. Either get the stable release (it comes with the model jar):
 
-1. Download Stanford CoreNLP from http://stanfordnlp.github.io/CoreNLP/index.html and copy all its jar files to CoreNLP-jMWE/lib
+1. Download Stanford CoreNLP from [http://stanfordnlp.github.io/CoreNLP/index.html](http://stanfordnlp.github.io/CoreNLP/index.html) and copy all its jar files to CoreNLP-jMWE/lib
 
 Or get the current master branch:
 
-1. Clone Stanford CoreNLP from https://github.com/stanfordnlp/CoreNLP and copy all its jar files to CoreNLP-jMWE/lib
-2. Get the CoreNLP models from http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar and copy them to CoreNLP-jMWE/lib
+1. Clone Stanford CoreNLP from [https://github.com/stanfordnlp/CoreNLP](https://github.com/stanfordnlp/CoreNLP) and copy all its jar files to CoreNLP-jMWE/lib
+2. Get the CoreNLP models from [http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar](http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar) and copy them to CoreNLP-jMWE/lib
 
 ### Getting jMWE
 
@@ -91,19 +91,11 @@ The compilation preparation is done!
 
         ant jar
     
-2. To run the unit tests, you need to edit the ``JMWEAnnotatorTest.java`` and point the ``public static final String index`` variable to the location on your file system where the ``mweindex_wordnet3.0_semcor1.6.data`` file is stored. Then, run: 
+2. To run the unit tests, you need to edit the ``AbstractJMWEAnnotatorTst.java`` file and point the ``public static final String index`` variable to the location on your file system where the ``mweindex_wordnet3.0_semcor1.6.data`` file is stored. Then, run: 
 
         ant clean && ant junit
         
-Running the unit tests should, among other tests, output something similar to
-
-```
-    [junit] Running edu.stanford.nlp.pipeline.JMWEAnnotatorTest
-    ...
-    [junit] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.337 sec
-```
-
-to indicate that all tests have passed.
+Running the unit tests should result in **all** test passing. If this is not the case, resolve these problems before continuing. Common reasons why tests fail would be missing dependencies or not editing the ``AbstractJMWEAnnotatorTst.java`` file to point to the ``mweindex_wordnet3.0_semcor1.6.data`` file on your file-system.
     
     
 ## Demo
@@ -255,24 +247,7 @@ The CoreNLP-jMWE annotator is developed by Tomasz Oliwa at the Center for Resear
 
 ## Original Stanford CoreNLP README
 
-Original Stanford CoreNLP README.md from https://github.com/stanfordnlp/CoreNLP :
+You can find the original Stanford CoreNLP README.md at [https://github.com/stanfordnlp/CoreNLP](https://github.com/stanfordnlp/CoreNLP)
 
-Stanford CoreNLP
-================
-
-Stanford CoreNLP provides a set of natural language analysis tools written in Java. It can take raw human language text input and give the base forms of words, their parts of speech, whether they are names of companies, people, etc., normalize and interpret dates, times, and numeric quantities, mark up the structure of sentences in terms of phrases or word dependencies, and indicate which noun phrases refer to the same entities. It was originally developed for English, but now also provides varying levels of support for (Modern Standard) Arabic, (mainland) Chinese, French, German, and Spanish. Stanford CoreNLP is an integrated framework, which make it very easy to apply a bunch of language analysis tools to a piece of text. Starting from plain text, you can run all the tools with just two lines of code. Its analyses provide the foundational building blocks for higher-level and domain-specific text understanding applications. Stanford CoreNLP is a set of stable and well-tested natural language processing tools, widely used by various groups in academia, industry, and government. The tools variously use rule-based, probabilistic machine learning, and deep learning components.
-
-The Stanford CoreNLP code is written in Java and licensed under the GNU General Public License (v3 or later). Note that this is the full GPL, which allows many free uses, but not its use in proprietary software that you distribute to others.
-
-You can find releases of Stanford CoreNLP on [Maven Central](http://search.maven.org/#browse%7C11864822).
-
-You can find more explanation and documentation on [the Stanford CoreNLP homepage](http://nlp.stanford.edu/software/corenlp.shtml#Demo).
-
-The most recent models associated with the code in the HEAD of this repository can be found [here](http://nlp.stanford.edu/software/stanford-corenlp-models-current.jar).
-
-For information about making contributions to Stanford CoreNLP, see the file [CONTRIBUTING.md](CONTRIBUTING.md).
-
-Questions about CoreNLP can either be posted on StackOverflow with the tag [stanford-nlp](http://stackoverflow.com/questions/tagged/stanford-nlp), 
-  or on the [mailing lists](http://nlp.stanford.edu/software/corenlp.shtml#Mail).
 
  
