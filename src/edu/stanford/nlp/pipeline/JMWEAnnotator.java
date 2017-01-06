@@ -3,11 +3,14 @@ package edu.stanford.nlp.pipeline;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
 import java.util.Set;
 
+import edu.stanford.nlp.ling.CoreAnnotation;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.ling.CoreLabel;
 import edu.stanford.nlp.ling.JMWEAnnotation;
@@ -106,7 +109,7 @@ public class JMWEAnnotator implements Annotator {
 
     @Override
     public void annotate(Annotation annotation) {
-        if (annotation.has(CoreAnnotations.SentencesAnnotation.class)) {
+        if (annotation.get(CoreAnnotations.SentencesAnnotation.class) != null) {
             // open index
             try {
                 index.open();
@@ -123,18 +126,36 @@ public class JMWEAnnotator implements Annotator {
             // close index
             index.close();
         } else {
-            throw new RuntimeException("unable to find words/tokens in: " + annotation);
+            throw new RuntimeException("the sentence annotation was null");
         }
     }
 
     @Override
-    public Set<Requirement> requirementsSatisfied() {
-        return Collections.singleton(NER_REQUIREMENT);
-    }
+    public Set<Class<? extends CoreAnnotation>> requirementsSatisfied() {
+        return Collections.emptySet();
+      }
 
     @Override
-    public Set<Requirement> requires() {
-        return Annotator.REQUIREMENTS.get(STANFORD_NER);
+    /**
+     * Using the same requirements as the CoreNLP NERCombinerAnnotator
+     */
+    public Set<Class<? extends CoreAnnotation>> requires() {
+        return Collections.unmodifiableSet(new HashSet<>(Arrays.asList(
+                CoreAnnotations.TextAnnotation.class,
+                CoreAnnotations.TokensAnnotation.class,
+                CoreAnnotations.SentencesAnnotation.class,
+                CoreAnnotations.CharacterOffsetBeginAnnotation.class,
+                CoreAnnotations.CharacterOffsetEndAnnotation.class,
+                CoreAnnotations.PartOfSpeechAnnotation.class,
+                CoreAnnotations.LemmaAnnotation.class,
+                CoreAnnotations.BeforeAnnotation.class,
+                CoreAnnotations.AfterAnnotation.class,
+                CoreAnnotations.TokenBeginAnnotation.class,
+                CoreAnnotations.TokenEndAnnotation.class,
+                CoreAnnotations.IndexAnnotation.class,
+                CoreAnnotations.OriginalTextAnnotation.class,
+                CoreAnnotations.SentenceIndexAnnotation.class
+            )));
     }
 
     /**
